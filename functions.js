@@ -58,10 +58,8 @@ function consultarTransacciones(usuarioActual) {
         return;
     }
 
-    prompt(`Historial de transacciones de ${usuarioActual.nombre}:
-                presiona enter para continuar`);
-
-    transaccionesPropias.forEach(t => { console.log(`[${t.fecha}] ${t.tipo}: ${t.monto} ${t.detalle ? t.detalle : ""}`); });
+    const mensajeT = transaccionesPropias.map(t => (`[${t.fecha}] ${t.tipo}: ${t.monto} ${t.detalle ? t.detalle : ""}`));
+    prompt(mensajeT) 
 }
 
 
@@ -160,7 +158,10 @@ menuCajero(usuarioActual){
 function menuInicioSesion() {
 
 // ¿Esta registrado?    
-let estasRegistrado = Number(prompt("Escribe 1 si estas registrado o 2 para registrarte: "));
+let estasRegistrado = Number(prompt(`Ingresa:
+    1. Iniciar sesion
+    2. Registrarte 
+    3. Salir`));
     if (estasRegistrado === 1) {
         for (let i = 0; i < 3; i++) {
             const nombreIngresado = prompt("Ingresa tu usuario: ");
@@ -191,7 +192,7 @@ let estasRegistrado = Number(prompt("Escribe 1 si estas registrado o 2 para regi
                     } else if (opcion === 4) {
                         consultarTransacciones(usuarioActual);
                     } else if (opcion === 5) {
-                        console.log("Saliste del programa, esperamos verte pronto");
+                        alert("Saliste del programa, esperamos verte pronto");
                         continuar = false;
                         return continuar;
                     }
@@ -201,7 +202,7 @@ let estasRegistrado = Number(prompt("Escribe 1 si estas registrado o 2 para regi
             }
         }
 
-        console.log("Intentaste ingresar muchas veces, tu cuenta fué bloqueada por 24 horas");
+        alert("Intentaste ingresar muchas veces, tu cuenta fué bloqueada por 24 horas");
     } else if (estasRegistrado === 2) {
         // Registro de usuario
         const nombre = prompt("Ingrese un nombre de usuario para registrarse: ");
@@ -210,10 +211,14 @@ let estasRegistrado = Number(prompt("Escribe 1 si estas registrado o 2 para regi
 
         registrarUsuario(nombre, contraseña, saldo);
         console.log("Usuario registrado");
-    } else {
+    } else if (estasRegistrado === 3) {
+        alert("Saliste del programa");
+    }
+    else {
         estasRegistrado = Number(prompt(`Ingresa un valor válido: 
                 1. Iniciar sesión.
-                2. Registrarse`));
+                2. Registrarse
+                3. Salir`));
         menuInicioSesion();
     }
 
